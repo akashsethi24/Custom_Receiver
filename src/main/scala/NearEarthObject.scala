@@ -29,7 +29,6 @@ class NearEarthObject extends Receiver[String](StorageLevel.MEMORY_ONLY) with Ru
         .asString
       date = newDate
       val response = result.body
-      println(date + " HERE")
 
       store(response)
     }
