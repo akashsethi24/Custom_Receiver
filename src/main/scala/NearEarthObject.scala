@@ -25,12 +25,16 @@ class NearEarthObject extends Receiver[String](StorageLevel.MEMORY_ONLY) with Ru
   }
 
   def getNeoData(date: Date): Unit = {
-    val stringDate = date.toString
-    val result = Http(s" https://api.nasa.gov/neo/rest/v1/feed?start_date=$stringDate&end_date=$stringDate&api_key=0zqbbt7aJRLgz8u2LuilsPyZHJj9pMkG1fUsjfLT")
-      .header("Content-Type", "application/json")
-      .header("Charset", "UTF-8")
-      .asString.body
-    store(result)
-    getNeoData(new Date(date.getTime - 86400000))
+    date match {
+      case currentDate if currentDate.toString == "1900-01-01" => store("End Of Data")
+      case _ =>
+        val stringDate = date.toString
+        val result = Http(s" https://api.nasa.gov/neo/rest/v1/feed?start_date=$stringDate&end_date=$stringDate&api_key=0zqbbt7aJRLgz8u2LuilsPyZHJj9pMkG1fUsjfLT")
+          .header("Content-Type", "application/json")
+          .header("Charset", "UTF-8")
+          .asString.body
+        store(result)
+        getNeoData(new Date(date.getTime - 86400000))
+    }
   }
 }
