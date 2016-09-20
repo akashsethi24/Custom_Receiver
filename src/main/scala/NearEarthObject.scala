@@ -6,17 +6,16 @@ import org.apache.spark.streaming.receiver.Receiver
 import scalaj.http.Http
 
 class NearEarthObject extends Receiver[String](StorageLevel.MEMORY_ONLY) with Runnable {
-  var thread: Thread = _
 
-  var date = new Date(System.currentTimeMillis())
 
   override def onStart(): Unit = {
-    thread = new Thread(this)
+    val thread = new Thread(this)
     thread.start()
   }
 
   override def onStop(): Unit = {
-    thread.interrupt()
+    // There is nothing much to do as the thread calling receive()
+    // is designed to stop by itself if isStopped() returns false
   }
 
   override def run(): Unit = {
