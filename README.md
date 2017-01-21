@@ -7,4 +7,6 @@ The flow of the Project is an under follow.
     * Making a window of 5 seconds.
     * We are using http request to get data for NEO.
     * We are pringting the output on console.
+    
+We are using Scala version `2.11.7` and Spark version `2.0.0`.
 
